@@ -43,7 +43,7 @@ parseFactor()
   int i = 0;
   if(*x >= '0' && *x <= '9')
     {
-      //TODO: Is not working
+      int s = 0;
       while(*x >= '0' && *x <= '9')
 	{
 	  val[i] = *x++ - '0';
@@ -51,7 +51,8 @@ parseFactor()
 	}
       for(int k = i - 1; k >= 0; k--)
 	{
-	  num += val[k] * (int)pow(10.0, (double) k);
+	  num += val[k] * (int)pow(10.0, (double) s);
+	  s++;
 	}
       return num;
     }
