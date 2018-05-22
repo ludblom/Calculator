@@ -8,6 +8,8 @@ char * x;
 int parseFactor();
 int parseSum();
 int parseProduct();
+int parseNegative();
+int parseSingNeg();
 
 int
 parseSum()
@@ -25,14 +27,39 @@ parseSum()
 int
 parseProduct()
 {
-  int fac1 = parseFactor();
+  int fac1 = parseNegative();
   while(*x == '*')
     {
       ++x;
-      int fac2 = parseFactor();
+      int fac2 = parseNegative();
       fac1 = fac1 * fac2;
     }
   return fac1;
+}
+
+int
+parseNegative()
+{
+  int neg1 = parseSingNeg();
+  while(*x == '-')
+    {
+      ++x;
+      int neg2 = parseSingNeg();
+      neg1 = neg1 - neg2;
+    }
+  return neg1;
+}
+// -
+int
+parseSingNeg()
+{
+  int i = 1;
+  while(*x == '-')
+    {
+      ++x;
+      i = i * (-1);
+    }
+  return (i*parseFactor());
 }
 
 int
@@ -60,12 +87,13 @@ parseFactor()
     {
       ++x; // Consume (
       int sum = parseSum();
-      ++x; // Consime )
+      ++x; // Consume )
       return sum;
     }
   else
     {
-      printf("Error: Character.");
+      printf("Error: Character \"%c\" entered.\n", *x);
+      exit(1);
     }
 }
 
