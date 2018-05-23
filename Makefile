@@ -1,2 +1,2 @@
 default:
-	gcc -g calc.c -lm -o calc
+	gcc -g calc.c -o calc

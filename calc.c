@@ -1,107 +1,104 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+
+double parseFormula();
+double parseSum();
+double parseProduct();
+double parseFactor();
+double parseNumber();
 
 char * x;
 
-int parseFactor();
-int parseSum();
-int parseProduct();
-int parseNegative();
-int parseSingNeg();
+double
+parseFormula()
+{
+  double result = parseSum();
+  if(*x == '\0')
+    {
+      return result;
+    }
+  printf("Error: Something went wrong in parseFormula()");
 
-int
+}
+
+double
 parseSum()
 {
-  int pro1 = parseProduct();
+  double left = parseProduct();
   while(*x == '+')
     {
       ++x;
-      int pro2 = parseProduct();
-      pro1 = pro1 + pro2;
+      double right = parseProduct();
+      left += right;
     }
-  return pro1;
+  return left;
 }
 
-int
+double
 parseProduct()
 {
-  int fac1 = parseNegative();
+  double left = parseFactor();
   while(*x == '*')
     {
       ++x;
-      int fac2 = parseNegative();
-      fac1 = fac1 * fac2;
+      double right = parseFactor();
+      left *= right;
     }
-  return fac1;
+  return left;
 }
 
-int
-parseNegative()
-{
-  int neg1 = parseSingNeg();
-  while(*x == '-')
-    {
-      ++x;
-      int neg2 = parseSingNeg();
-      neg1 = neg1 - neg2;
-    }
-  return neg1;
-}
-// -
-int
-parseSingNeg()
-{
-  int i = 1;
-  while(*x == '-')
-    {
-      ++x;
-      i = i * (-1);
-    }
-  return (i*parseFactor());
-}
-
-int
+double
 parseFactor()
 {
-  int val[200];
-  int num = 0;
-  int i = 0;
   if(*x >= '0' && *x <= '9')
     {
-      int s = 0;
-      while(*x >= '0' && *x <= '9')
-	{
-	  val[i] = *x++ - '0';
-	  i++;
-	}
-      for(int k = i - 1; k >= 0; k--)
-	{
-	  num += val[k] * (int)pow(10.0, (double) s);
-	  s++;
-	}
-      return num;
+      return parseNumber();
     }
   else if(*x == '(')
     {
       ++x; // Consume (
-      int sum = parseSum();
+      double sum = parseSum();
       ++x; // Consume )
       return sum;
     }
   else
     {
       printf("Error: Character \"%c\" entered.\n", *x);
-      exit(1);
+
     }
+}
+
+double
+parseNumber()
+{
+  double number = 0;
+  while(*x >= '0' && *x <= '9')
+    {
+      number = number * 10;
+      number = number + *x - '0';
+      ++x;
+    }
+  if(*x == '.')
+    {
+      ++x;
+      double weight = 1;
+      while(*x >= '0' && *x <= '9')
+	{
+	  weight = weight / 10;
+	  double scale = (*x - '0') * weight;
+	  number += scale;
+	  ++x;
+	}
+    }
+  return number;
 }
 
 int
 main(int argc, char* argv[])
 {
   x = argv[1];
-  int result = parseSum();
-  printf("%d\n", result);
+  double result = parseFormula();
+  printf("%lf\n", result);
   return 0;
 }
