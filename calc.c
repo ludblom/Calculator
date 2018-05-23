@@ -5,6 +5,7 @@
 double parseFormula();
 double parseSum();
 double parseProduct();
+double parseDivision();
 double parseFactor();
 double parseNumber();
 
@@ -38,12 +39,25 @@ parseSum()
 double
 parseProduct()
 {
-  double left = parseFactor();
+  double left = parseDivision();
   while(*x == '*')
     {
       ++x;
-      double right = parseFactor();
+      double right = parseDivision();
       left *= right;
+    }
+  return left;
+}
+
+double
+parseDivision()
+{
+  double left = parseFactor();
+  while(*x == '/')
+    {
+      ++x;
+      double right = parseFactor();
+      left /= right;
     }
   return left;
 }
