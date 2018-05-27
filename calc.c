@@ -2,25 +2,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-double parseFormula();
-double parseSum();
-double parseProduct();
-double parseDivision();
-double parseFactor();
-double parseNumber();
+#include "calc.h"
 
 char * x;
 
 double
-parseFormula()
+parseFormula(char *init)
 {
+  x = init;
   double result = parseSum();
   if(*x == '\0')
     {
       return result;
     }
   printf("Error: Something went wrong in parseFormula()");
-
+  exit(1);
 }
 
 double
@@ -79,7 +75,7 @@ parseFactor()
   else
     {
       printf("Error: Character \"%c\" entered.\n", *x);
-
+      exit(1);
     }
 }
 
@@ -106,13 +102,4 @@ parseNumber()
 	}
     }
   return number;
-}
-
-int
-main(int argc, char* argv[])
-{
-  x = argv[1];
-  double result = parseFormula();
-  printf("%lf\n", result);
-  return 0;
 }

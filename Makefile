@@ -1,2 +1,2 @@
 default:
-	gcc -g calc.c -o calc
+	gcc -g main.c calc.c sum.c convert.c -o calc
