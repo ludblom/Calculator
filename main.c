@@ -6,8 +6,6 @@
 #include "convert.h"
 #include "functionUsed.h"
 
-#include <string.h>
-
 int
 main(int argc, char* argv[])
 {
@@ -27,22 +25,28 @@ main(int argc, char* argv[])
       printf("\t\tRegular use, calc [Expression]\n");
       return 1;
     }
+
+  // Todo: More work nedded in function.c and convert.c to support all numbers
+  // and negative numbers
   
   switch(*argv[1])
     {
     case 'S':
-      // Todo: More work nedded in function.c.c and convert.c to support all numbers
-      // and negative numbers
+      // functionParser in function.c.
+      // Parse the function and later pass that function with values to
+      // parseFormula in calc.c
       result = functionParser(argv[2], argv[3], argv[4], SUM);      
       break;
     case 'P':
       result = functionParser(argv[2], argv[3], argv[4], PRODUCT);
       break;
     default:
-      result = parseFormula(argv[1]); // Just regular expression or error
+      // Pure mathematical expression or error
+      result = parseFormula(argv[1]);
       break;
     }
-  
+
+  // Print result
   printf("%lf\n", result);
   return 0;
 }

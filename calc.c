@@ -1,11 +1,13 @@
-#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "calc.h"
 
 char * x;
 
+// Go through the hirarchy untill '\0' is reached, evaluating
+// the expression along the way
 double
 parseFormula(char *init)
 {

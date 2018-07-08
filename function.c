@@ -41,8 +41,12 @@ functionParser(char *start, char *end, char *x, RETURN funk)
   
   for(int i = startInt; i <= endInt; i++)
     {
-      char *tmp = convert(i, x);
-      
+      //TODO: Only work for one digit, non negative, numbers. Check convert.c
+      char value[16];
+      sprintf(value, "%d", i);
+      char *tmp = convert(value, x);
+
+      // Calculate the product or sum
       switch(funk)
 	{
 	case SUM:
