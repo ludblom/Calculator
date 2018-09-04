@@ -11,6 +11,7 @@ Move the terminal into the project folder and compile it with
 `make`
 
 Copy/move the compiled "calc" file to "~/bin"
+
 `cp [PROJECT FOLDER]/calc ~/bin/calc`
 
 You are now able to use it directly in the terminal
