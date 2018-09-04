@@ -1,5 +1,6 @@
 # Calculator
 Simple terminal calculator
+
 Warning! Still do not allways work as expected.
 
 ## Simple install on Linux
