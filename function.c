@@ -1,23 +1,6 @@
-/*
-    Simple terminal calculator
-    Copyright (C) 2018  Ludvig Blomkvist  <ludblom@gmail.com>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "calc.h"
 #include "convert.h"
@@ -41,10 +24,8 @@ parseInt(char *x)
 }
 
 double
-functionParser(char *start, char *end, char *x, RETURN funk)
-{  
-  int startInt = parseInt(start);
-  int endInt = parseInt(end);
+functionParser(int startInt, int endInt, char *x, RETURN funk)
+{
   double endVal;
 
   if(funk == PRODUCT)
@@ -58,23 +39,21 @@ functionParser(char *start, char *end, char *x, RETURN funk)
   
   for(int i = startInt; i <= endInt; i++)
     {
-      //TODO: Only work for one digit, non negative, numbers. Check convert.c
-      char value[16];
+      //TODO: Ugly AF, but works
+      char* value = malloc(32 * sizeof(char));
       sprintf(value, "%d", i);
-      char *tmp = convert(value, x);
 
       // Calculate the product or sum
       switch(funk)
 	{
 	case SUM:
-	  endVal += parseFormula(tmp);
+	  endVal += parseFormula(value);
 	  break;
 	case PRODUCT:
-	  endVal *= parseFormula(tmp);
+	  endVal *= parseFormula(value);
 	  break;
 	}
-      
-      free(tmp);
+      free(value);
     }
   return endVal;
 }
