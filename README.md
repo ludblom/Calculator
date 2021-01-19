@@ -3,20 +3,11 @@ Simple terminal calculator
 
 Warning! Still do not allways work as expected.
 
-## Simple install on Linux
-Create a "bin" folder at home "~" if it do not allready exist
-
-`mkdir ~/bin`
-
-Move the terminal into the project folder and compile it with
+## Install on Linux
+Make it
 
 `make`
 
-Copy/move the compiled "calc" file to "~/bin"
+And move it
 
-`cp [PROJECT FOLDER]/calc ~/bin/calc`
-
-You are now able to use it directly in the terminal
-
-## Uninstall
-`rm ~/bin/calc`
+`cp [PROJECT FOLDER]/calc ~/usr/bin/`
